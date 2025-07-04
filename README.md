@@ -1,0 +1,2 @@
+# pangu_correction
+一个通过修正盘古气象大模型预测数据进行气象预报的transformer模型
