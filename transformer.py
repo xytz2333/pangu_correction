@@ -6,6 +6,19 @@ import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from torch.utils.data import Dataset, DataLoader
+import swanlab
+
+# 创建swanlab实验
+run = swanlab.init(
+    project="pangu_correction",
+    experiment_name="test",
+    config={
+        "learning_rate": 0.0001,
+        "architecture": "Transformer",
+        "dataset": "Pangu+WS Saaleaue",
+        "epochs": 20
+    }
+)
 
 matplotlib.rc("font",family='YouYuan')
 
@@ -195,6 +208,9 @@ for epoch in range(EPOCHS):
 
     print(
         f'Epoch {epoch + 1}/{EPOCHS} | Train Loss: {train_loss / len(train_loader):.4f} | Test Loss: {test_loss / len(test_loader):.4f}')
+
+    # 向swanlab上传训练指标
+    run.log({"Train_Loss": train_loss / len(train_loader),"Test_Loss": test_loss / len(test_loader)})
 
 # 可视化函数
 def plot_results(sample_idx=0):
